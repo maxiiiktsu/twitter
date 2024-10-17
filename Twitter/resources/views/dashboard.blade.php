@@ -38,24 +38,30 @@
             </div>
         </div>
         <div class="col-6">
+            @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                Idea created Successfully
+                {{session('success')}}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+            @endif
             <h4> Share yours ideas </h4>
             <div class="row">
-                <div class="mb-3">
-                    <textarea class="form-control" id="idea" rows="3"></textarea>
-                </div>
-                <div class="">
-                    <button class="btn btn-dark"> Share </button>
-                </div>
+                <form action="{{route('post.store')}}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <textarea class="form-control" id="idea" rows="3" name="content"></textarea>
+                    </div>
+                    <div class="">
+                        <button class="btn btn-dark"> Share</button>
+                    </div>
+                </form>
             </div>
+
             <hr>
 
-            @foreach($users as $user)
+            @foreach($posts as $post)
 
-                @include('_template.card')
+                @include('_template.post')
             @endforeach
         </div>
         <div class="col-3">

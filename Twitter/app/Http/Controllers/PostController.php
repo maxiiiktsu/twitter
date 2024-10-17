@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Controllers;
+use App\Models\Post;
+
+use Illuminate\Http\Request;
+
+class PostController extends Controller
+{
+
+
+    public function store(Request $request){
+        $post = new Post();
+        $post ->setContent($request->content);
+        $post->likes = 0;
+        $post->save();
+
+        return redirect()->route('dashboard.index')->with('success', 'Idea created sucefulky');
+    }
+
+    public function destroy($postId){
+        $post = Post::findOrFail($postId);
+        $post->delete();
+
+        return redirect()->route('dashboard.index')->with('success', 'Idea deleted successfuly');
+    }
+
+    public function update(Request $request, $postId){
+        $post = Post::findOrFail($postId);
+        $post->setContent($request->content);
+        $post->save();
+        return redirect()->route('dashboard.index')->with('success', 'Idea updated succefully');
+
+    }
+}
